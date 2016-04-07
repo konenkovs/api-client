@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -69,7 +71,14 @@ public class ApiClientApplication implements CommandLineRunner {
 	}
 	
 	public static void main(String[] args) {
-        SpringApplication.run(ApiClientApplication.class, args);
+        ApplicationContext ctx = SpringApplication.run(ApiClientApplication.class, args);
+        SpringApplication.exit(ctx, new ExitCodeGenerator() {
+			
+			@Override
+			public int getExitCode() {
+				return 0;
+			}
+		});
     }
 
 }
